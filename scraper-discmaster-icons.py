@@ -1,5 +1,6 @@
 # RCAutomate.com 
 # Scrape ICO files from discmaster on archive.org from Archived CD-Rs
+# Assistance referenced from 10-15 iterations of optimizations with ChatGPT 4o
 
 import os
 import requests
