@@ -18,9 +18,10 @@ OUTPUT_DIR = "ico_files"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 def fetch_icons():
-    for page_num in range(0, 99):  # Adjust range for actual page count
+    for page_num in range(26, 99):  # Adjust range for actual page count
         print(f"Processing page {page_num}...")
         response = requests.get(f"{BASE_URL}{page_num}")
+        response.encoding = 'utf-8'
         if response.status_code != 200:
             print(f"Failed to load page {page_num}. Skipping.")
             continue
