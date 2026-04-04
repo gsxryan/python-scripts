@@ -6,7 +6,7 @@
 # Most common desktop shortcut sizes 32x32 (small taskbar) 48x48 (standard), and 256x256 (high DPI)
 
 # All ICOs, strict racy exclusion filter
-# https://discmaster.textfiles.com/search?format=ico&widthMin=48&heightMin=48&widthMax=48&heightMax=48&nsfw=0&pageNum=1
+# https://discmaster.textfiles.com/search?format=ico&widthMin=48&heightMin=48&widthMax=48&heightMax=48&nsfw=0&pageNum=
 
 import os
 import requests
@@ -15,6 +15,7 @@ from urllib.parse import urljoin
 
 BASE_URL = "https://discmaster.textfiles.com/search?format=ico&widthMin=48&heightMin=48&widthMax=48&heightMax=48&nsfw=0&dedup=dedup&sortBy=addts&limit=1000&pageNum="
 OUTPUT_DIR = "ico_files"
+log_file = open('error.log', 'a')
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 def fetch_icons():
@@ -24,6 +25,7 @@ def fetch_icons():
         response.encoding = 'utf-8'
         if response.status_code != 200:
             print(f"Failed to load page {page_num}. Skipping.")
+            log_file.write(f"Failed to load page {page_num}. Skipping.\n")
             continue
         
         soup = BeautifulSoup(response.text, 'html.parser')
@@ -63,8 +65,10 @@ def fetch_icons():
                         file.write(ico_data.content)
                 else:
                     print(f"Failed to download {ico_url}")
+                    log_file.write(f"Failed to download {ico_url}\n")
             except Exception as e:
                 print(f"Error downloading {ico_url}: {e}")
+                log_file.write(f"Error downloading {ico_url}: {e}\n")
     print("Download complete.")
 
 if __name__ == "__main__":
